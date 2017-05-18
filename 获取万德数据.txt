@@ -1,0 +1,108 @@
+from WindPy import w as WindPyGateway
+
+#    stkId_list = []
+#    
+#    file_paths = ['.\\Barra_Hold_Positions\\Barra_300_Feb.xlsx',
+#                  '.\\Barra_Hold_Positions\\Barra_500_Feb.xlsx']
+#                  
+#    for filePath in file_paths:
+#        heldPositions = pd.read_excel(filePath)
+#        for index, row in heldPositions.iterrows():    # 获取每行的index、row
+#            stkId_list.append(row['Stock'])
+#    
+#    begin_tm = time.time()
+#    
+#    
+#    stock_names = getStockNameFromId(stkId_list)
+#    stock_id_name_map = dict(zip(stkId_list, stock_names))
+#    end_tm = time.time()
+#    print('cost time is %.2f seconds'%(end_tm-begin_tm))
+#    print(stock_id_name_map)
+
+#    open_date = '2017-2-3'
+#    stkId_list = ['601009.SH', '601088.SH', '601098.SH', '002294.SZ']
+#    stk_Id_list_str = ','.join(stkId_list)
+#    stk_Id_list_str = \
+#    '''600033.SH,600056.SH,600106.SH,600129.SH,600148.SH,600167.SH,600208.SH,600258.SH,600261.SH,600270.SH,
+#    600295.SH,600309.SH,600312.SH,600329.SH,600366.SH,600483.SH,600487.SH,600507.SH,600508.SH,600522.SH,
+#    600550.SH,600562.SH,600595.SH,600600.SH,600688.SH,600697.SH,600698.SH,600708.SH,600730.SH,600743.SH,
+#    600750.SH,600755.SH,600757.SH,600816.SH,600823.SH,600835.SH,600894.SH,600966.SH,601233.SH,601318.SH,
+#    601600.SH,601607.SH,601636.SH,000055.SZ,000100.SZ,000429.SZ,000488.SZ,000501.SZ,000561.SZ,000581.SZ,
+#    000600.SZ,000650.SZ,000687.SZ,000719.SZ,000725.SZ,000825.SZ,000858.SZ,000876.SZ,000878.SZ,000893.SZ,
+#    000963.SZ,000999.SZ,002081.SZ,002179.SZ,002203.SZ,002233.SZ,002244.SZ,002246.SZ,002300.SZ,002327.SZ,
+#    002376.SZ,002388.SZ,002401.SZ,002415.SZ,002437.SZ,002466.SZ,002534.SZ,002573.SZ,002595.SZ,002597.SZ,
+#    002636.SZ,002651.SZ,300033.SZ,300251.SZ,002383.SZ'''
+#    data = w.wsd(stk_Id_list_str, "close", open_date, open_date)
+#    for price in data.Data[0]:
+#        print(' ', price)
+#    print('data is ', data)
+    
+#        for stkid, price in zip(self.stkId_list, data.Data[0]):
+#            self.stockInitPricesDict[stkid] = price
+        
+#    
+#    stt = b'14:46:00'.decode()
+#    stt_ = '14:46:00'
+#    print(stt_==stt)
+#    print('stt is ', stt)
+#    print('cost time is ', end_t-begin_t)
+    
+#    dd = getLastTradeDayOfStock11("2017-1-1", 'SZ002383')
+#    print('getLastTradeDayOfStock result is', dd)
+    
+    
+#    date_str = getNextTradeDayStr(datetime.strptime('2017-02-16','%Y-%m-%d'))
+#    print('tradeDay.Data[0][0] is ', date_str)
+    
+#    print(getNearestTradeDay(datetime(2017, 2, 5)))
+#    sid = convertFromWindyStockId('000001.SZ')
+#    print('sid is ', sid)
+    
+#    dbReader.read1MinPriceDataByDate('SH600000')
+#    date = dbReader.getNewestDataInDB('SH600019', datetime(2017, 1, 24))
+#    date_str = "'SZ000651','SZ000686','SZ000709'"
+#    data = dbReader.getNewestDataInDB(date_str, datetime(2017, 1, 24))
+#    print(data)
+    
+#    ss = 'abcde %%  %s'%('abcde')
+#    print(ss)
+    
+#    data = w.tdays("2017-01-09", "2017-02-09", "")
+#    data = w.tdaysoffset(-1, "2017-02-06", "")
+#    print('data is ', data)
+    
+#    w.menu()
+#    data = w.wst("600000.SH","last", datetime.today()-timedelta(0,2*3600), datetime.now())
+
+#    data = w.wsq("600000.SH, 000001.SZ", "rt_last, last") # 取浦发银行等股票当前行情信息
+   
+#    data = w.wsq("600000.SH, 000001.SZ","rt_time, rt_last", func=demoWSQCallback111) #订阅浦发银行等股票当前行情信息
+#    data = w.wsq("600004.SH, 600028.SH","rt_time, rt_last", func=demoWSQCallback111) 
+    
+#    print('data is ', data)
+
+#    w.wsq('600000.SH,600005.SH', "rt_last,rt_last_vol")  # 取浦发银行等股票当前行情信息
+#    data=w.wsq('600000.SH,600005.SH', "rt_last,rt_last_vol", func=DemoWSQCallback) # 订阅浦发银行等股票当前行情信息
+#    w.start()
+#    print(datetime.today()-timedelta(0, 2*3600))
+#    print(datetime.now()-timedelta(0, 2*3600))
+
+
+#    data = w.wss("600000.SH, 600005.SH, 600004.SH, 600007.SH, 300148.SZ","close","rptDate=20161230")
+#    print(data.Times)
+#    print(data.Data[0])
+
+#    count = 0
+#    while True:
+#        count = (count + 1)%1001
+#        if count%25==0:
+#            print('current count is ', count)
+#            print('now rt_prices is', rt_prices)
+#        time.sleep(1)
+    
+    
+#    dt = datetime(2017, 5, 4, 9, 29)
+#    time_str = dt.strftime('%H:%M:%S')
+#    print('time_str is ', time_str)
+#    
+#    print(getLastTradeDayOfStock('2017-02-13', 'SZ000625'))

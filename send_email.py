@@ -11,7 +11,7 @@ def _format_addr(s):
           addr))
 
 from_addr = 'tusonggao@163.com'
-password = '******'
+password = 'tusg070185'
 to_addr = '360426145@qq.com'
 smtp_server = 'smtp.163.com'
 

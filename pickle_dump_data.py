@@ -10,3 +10,5 @@ with open('./model/best_model/auc_lst.pkl', 'rb') as file:
     obb = pickle.load(file)
     print('pickle load')
     print(obb['total_batch_num_lst'])
+
+    

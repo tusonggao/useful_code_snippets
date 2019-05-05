@@ -51,6 +51,8 @@ def get_gpu_times(maximum_time):
     sizes_lst = []
     matrix_sizes = range(500,50000,50)
 
+    # warm up
+
     for size in matrix_sizes:
         print("####### Calculating on the matrix size of ", size, " #######")
 
@@ -89,11 +91,11 @@ def get_gpu_times(maximum_time):
 
 ###############################################################################
 
-# gpu_times, sizes_lst = get_gpu_times(0.35)
-#
-# plt.plot(sizes_lst, gpu_times, 'o-')
-# plt.ylabel('Time')
-# plt.xlabel('Matrix size')
-# plt.show()
+gpu_times, sizes_lst = get_gpu_times(0.35)
+
+plt.plot(sizes_lst, gpu_times, 'o-')
+plt.ylabel('Time')
+plt.xlabel('Matrix size')
+plt.show()
 
 ###############################################################################

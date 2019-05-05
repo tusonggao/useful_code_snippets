@@ -1,14 +1,16 @@
-import webbrowser
-import time, os
-
+import time
+import os
 import win32api
 
-num = 1
+urls_to_open = ['https://colab.research.google.com/drive/1VVhv7byQBH8K7HJW_t2srOKoQOOYctY4#scrollTo=EAn4Hpz2pEM9']
+browser_path = 'C:/Users/tusonggao/AppData/Local/Google/Chrome/Application/chrome.exe'
 
-while num <= 5:
+num = 0
+while num < 1000:
     num += 1
-    time.sleep(60*10)
-    # webbrowser.open("https://colab.research.google.com/drive/1VVhv7byQBH8K7HJW_t2srOKoQOOYctY4#scrollTo=EAn4Hpz2pEM9", 0, False)
+    for url in urls_to_open:
+        win32api.WinExec(browser_path + ' ' + url)
     print('open a url, num: ', num)
-    # os.system("C:/Users/tusonggao/AppData/Local/Google/Chrome/Application/chrome.exe https://colab.research.google.com/drive/1VVhv7byQBH8K7HJW_t2srOKoQOOYctY4#scrollTo=EAn4Hpz2pEM9")
-    win32api.WinExec("C:/Users/tusonggao/AppData/Local/Google/Chrome/Application/chrome.exe https://colab.research.google.com/drive/1VVhv7byQBH8K7HJW_t2srOKoQOOYctY4#scrollTo=EAn4Hpz2pEM9")
+    time.sleep(30*60)
+    # time.sleep(10)
+

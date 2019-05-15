@@ -43,15 +43,13 @@ def gen_data(data_shape, random_seed=None):
     lower, upper = -1, 1
     height, width = data_shape
     X_data = np.random.rand(height, width)*(upper - lower) + lower
-    y_data = np.zeros(height)
 
     col1, col2, col3 = 111, 222, 333
-    y_data[(X_data[:, col1] - 0.2) * (X_data[:, col2] - 0.2) * (X_data[:, col3] - 0.2) > 0.05] = 1
-    y_data[(X_data[:, col1] - 0.2) * (X_data[:, col2] - 0.2) * (X_data[:, col3] - 0.2) < -0.05] = 2
+    y_data = (X_data[:, col1] - 0.2) * (X_data[:, col2] - 0.2) * (X_data[:, col3] - 0.2) > 0
+    y_data = y_data.astype(np.float32)
 
     print('len of y_data[y_data == 0] is ', len(y_data[y_data == 0]),
-          'len of y_data[y_data == 1] is ', len(y_data[y_data == 1]),
-          'len of y_data[y_data == 2] is ', len(y_data[y_data == 2]))
+          'len of y_data[y_data == 1] is ', len(y_data[y_data == 1]))
 
     return X_data, y_data
 
@@ -83,30 +81,12 @@ def keras_DNN_test(X_test, y_test):
     model.add(BatchNormalization())
     model.add(Dense(1000, activation='relu', kernel_initializer='he_uniform'))
     model.add(BatchNormalization())
-    model.add(Dense(3, activation='softmax', name='output'))
-
-###############################################################################
-
-    # sen = Input(shape=(1000,), dtype='float32', name='input')
-    # # dense = Dense(2000, activation='selu', kernel_initializer='he_uniform')(sen)
-    # dense = Dense(2000, activation='relu', kernel_initializer='lecun_normal')(sen)
-    # dense = BatchNormalization()(dense)
-    #
-    # dense = Dense(1000, activation='selu', kernel_initializer='lecun_normal')(dense)
-    # dense = BatchNormalization()(dense)
-    #
-    # dense = Dense(200, activation='selu', kernel_initializer='lecun_normal')(dense)
-    # dense = BatchNormalization()(dense)
-    #
-    # output = Dense(3, activation='softmax', name='output')(dense)
-    # model = Model(sen, output)
-
-###############################################################################
+    model.add(Dense(1, activation='sigmoid', name='output'))
 
     adam = Adam(lr=0.001)
     # model.compile(loss='mean_squared_error', optimizer=adam)
-    # model.compile(optimizer=adam, loss='binary_crossentropy', metrics=['accuracy'])
-    model.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer=adam, loss='binary_crossentropy', metrics=['accuracy'])
+    # model.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
 
     plot_model(model, to_file='./model_test.png', show_shapes=True)
 
@@ -116,7 +96,7 @@ def keras_DNN_test(X_test, y_test):
     total_batch_num = 0
     test_acc_best = 0.0
 
-    y_test = to_categorical(y_test)
+    # y_test = to_categorical(y_test)
     for epoch in range(max_epochs):
         print('current epoch is ', epoch)
         batch_num = 0
@@ -124,9 +104,12 @@ def keras_DNN_test(X_test, y_test):
         for batch_X, batch_y in batcher(X_data, y_data, batch_size):
             batch_num += 1
             total_batch_num += 1
-            batch_y = to_categorical(batch_y)
+            # batch_y = to_categorical(batch_y)
             model.train_on_batch(batch_X, batch_y)
             if total_batch_num % 25 == 0:
+                predict_y = model.predict(X_test)
+                auc_score = roc_auc_score(y_test, predict_y)
+
                 train_loss, train_acc = model.evaluate(batch_X, batch_y, verbose=0)
                 test_loss, test_acc = model.evaluate(X_test, y_test, verbose=0)
                 if test_acc_best < test_acc:
@@ -138,7 +121,8 @@ def keras_DNN_test(X_test, y_test):
                 print('epoch:', epoch, 'total_batch_num:', total_batch_num,
                       'batch_num:', batch_num, 'train_loss:', train_loss,
                       'train_acc:', train_acc, 'test_loss:', test_loss,
-                      'test_acc:', test_acc, 'test_acc_best:', test_acc_best)
+                      'test_acc:', test_acc, 'auc_score:', auc_score,
+                      'test_acc_best:', test_acc_best)
         del X_data, y_data
 
 #################################################################################################

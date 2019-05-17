@@ -123,11 +123,19 @@ def keras_DNN_test(X_test, y_test):
                       'train_acc:', train_acc, 'test_loss:', test_loss,
                       'test_acc:', test_acc, 'auc_score:', auc_score,
                       'test_acc_best:', test_acc_best)
+                print(
+                    'epoch:{:3d} total_iter_num:{:6d}, Train Loss:{:.13f} Accuracy:{:.7f}, Val Loss:{:.13f} Accuracy: {:.7f}'.format(
+                        epoch, total_iter_num, train_score[0], train_score[1], val_score[0], val_score[1])
+                )
         del X_data, y_data
 
 #################################################################################################
 
 if __name__ == "__main__":
-    X_val, y_val = gen_data((20000, 1000), random_seed=42)
-    keras_DNN_test(X_val, y_val)
+    # X_val, y_val = gen_data((20000, 1000), random_seed=42)
+    # keras_DNN_test(X_val, y_val)
 
+epoch, total_iter_num, train_score0, train_score1, val_score0, val_score1= 7, 20, 1.1, 2.2, 3.3, 4.35
+print('''epoch:{:3d} total_iter_num:{:6d}, Train Loss:{:.13f} '''
+      '''Accuracy:{:.7f}, Val Loss:{:.13f} Accuracy: {:.7f}'''.format(
+      epoch, total_iter_num, train_score0, train_score1, val_score0, val_score1))

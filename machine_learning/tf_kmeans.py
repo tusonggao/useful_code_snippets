@@ -59,9 +59,7 @@ def bucket_mean(data, bucket_ids, num_buckets):
 
 means = bucket_mean(points, best_centroids, K)
 with tf.control_dependencies([did_assignments_change]):
-    do_updates = tf.group()
-    centroids.assign(means)
-    cluster_assignments.assign(best_centroids)
+    do_updates = tf.group(centroids.assign(means), cluster_assignments.assign(best_centroids))
 
 changed = True
 iters = 0
@@ -88,4 +86,5 @@ ax.scatter(sess.run(points).transpose()[0], sess.run(points).transpose()[1], mar
 plt.show()
 end_t = time.time()
 
-print('total cost time: ', end_t-start_t)
+print('Found in %.2f seconds' % (end_t-start_t), iters, 'iterations')
+print('Centroids:', centers)

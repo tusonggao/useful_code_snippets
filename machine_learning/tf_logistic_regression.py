@@ -1,5 +1,6 @@
 import time
 import numpy as np
+import matplotlib.pyplot as plt
 import tensorflow as tf
 import lightgbm as lgb
 
@@ -16,7 +17,7 @@ def create_mock_data():
     b = 0.77
     X = np.random.rand(1000, 4)
     y = np.dot(X, W) + b
-    y = np.where(y>3.3, 0, 1)
+    y = np.where(y>3.3, 1., 0.)
     print('X.shape is ', X.shape, y.shape, y.sum())
     return X, y
 
@@ -40,7 +41,7 @@ def batcher(X_data, y_data, batch_size=-1, random_seed=None):
 
 def logistic_regression_tf(X_train, y_train, X_test, y_test, n_epochs=100, batch_size=128, learning_rate=0.01):
     X_merged = np.r_[X_train, X_test]
-    X_merged = StandardScaler().fit_transform(X_merged)      # 标准转化
+    # X_merged = StandardScaler().fit_transform(X_merged)        # 标准转化
     # X_merged = np.c_[np.ones((len(X_merged), 1)), X_merged]  # 增加一列1，用于学习bias数值
     X_train = X_merged[:len(X_train)]
     X_test = X_merged[len(X_train):]
@@ -64,26 +65,36 @@ def logistic_regression_tf(X_train, y_train, X_test, y_test, n_epochs=100, batch
     with tf.Session() as sess:
         sess.run(init)
         for epoch in range(n_epochs):
-            # print('epoch is ', epoch)
+            print('epoch is ', epoch)
             for X_batch, y_batch in batcher(X_train, y_train, batch_size):
                 sess.run(training_op, feed_dict={X: X_batch, y: y_batch})
 
-        y_class_pred = np.where(y_pred.eval()>0.5, 1, 0)
-        correct_prediction = tf.equal(y_class_pred, y_test)
-        accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+            y_class_pred = np.where(y_pred.eval({X: X_test, y: y_test})>0.5, 1, 0)
+            correct_prediction = tf.equal(y_class_pred, y_test)
+            accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-        # Storing Loss and Accuracy to the history
-        loss_history.append(sum(sum(c)))
-        accuracy_history.append(accuracy.eval({X: x, Y: y}) * 100)
+            # Storing Loss and Accuracy to the history
+            current_loss = sum(sum(sess.run(loss, feed_dict={X: X_test, y: y_test})))
+            current_acc = sess.run(accuracy, feed_dict={X: X_test, y: y_test}) * 100
+            loss_history.append(current_loss)
+            accuracy_history.append(current_acc)
+            print('epoch is ', epoch, 'current_loss is ', current_loss,
+                  'current_acc is', current_acc)
+
+            run_epochs = epoch
+            if current_loss<=25:
+                break
+
 
         # if epoch % 10 == 0:
         #     mse_val = sess.run(mse, feed_dict={X: X_test, y: y_test})
         #     print("Epoch", epoch, "MSE =", mse_val)
         best_W = W.eval()
-        print('best_W is ', W)
+        best_bias = b.eval()
+        print('best_W is ', best_W, 'best_bias is ', best_bias)
 
-        plt.plot(list(range(epochs)), loss_history)
-        plt.plot(list(range(epochs)), accuracy_history)
+        plt.plot(list(range(run_epochs+1)), loss_history)
+        # plt.plot(list(range(epochs)), accuracy_history)
         plt.xlabel('Epochs')
         plt.ylabel('Cost')
         plt.title('Decrease in Cost with Epochs')
@@ -96,7 +107,7 @@ if __name__=='__main__':
     # X_data = housing.data
     # y_data = housing.target
     #
-    # X_train, X_test, y_train, y_test = train_test_split(X_data, y_data, test_size=0.3, random_state=42)
-    # print('X_train.shape is', X_train.shape, 'y_train.shape is', y_train.shape)
-    # print('X_test.shape is', X_test.shape, 'y_test.shape is', y_test.shape)
-    # logistic_regression_tf(X_train, y_train, X_test, y_test)
+    X_train, X_test, y_train, y_test = train_test_split(X_data, y_data, test_size=0.3, random_state=42)
+    print('X_train.shape is', X_train.shape, 'y_train.shape is', y_train.shape)
+    print('X_test.shape is', X_test.shape, 'y_test.shape is', y_test.shape)
+    logistic_regression_tf(X_train, y_train, X_test, y_test, n_epochs=3000, batch_size=32)

@@ -41,7 +41,7 @@ def batcher(X_data, y_data, batch_size=-1, random_seed=None):
 
 def logistic_regression_tf(X_train, y_train, X_test, y_test, n_epochs=100, batch_size=128, learning_rate=0.01):
     X_merged = np.r_[X_train, X_test]
-    # X_merged = StandardScaler().fit_transform(X_merged)        # 标准转化
+    X_merged = StandardScaler().fit_transform(X_merged)        # 标准转化
     # X_merged = np.c_[np.ones((len(X_merged), 1)), X_merged]  # 增加一列1，用于学习bias数值
     X_train = X_merged[:len(X_train)]
     X_test = X_merged[len(X_train):]
@@ -110,4 +110,4 @@ if __name__=='__main__':
     X_train, X_test, y_train, y_test = train_test_split(X_data, y_data, test_size=0.3, random_state=42)
     print('X_train.shape is', X_train.shape, 'y_train.shape is', y_train.shape)
     print('X_test.shape is', X_test.shape, 'y_test.shape is', y_test.shape)
-    logistic_regression_tf(X_train, y_train, X_test, y_test, n_epochs=3000, batch_size=32)
+    logistic_regression_tf(X_train, y_train, X_test, y_test, n_epochs=3000, batch_size=16)

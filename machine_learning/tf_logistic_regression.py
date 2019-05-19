@@ -7,6 +7,14 @@ from sklearn.datasets import fetch_california_housing
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
+def create_mock_data():
+    W = np.array([1.1, 2.2, -3.3, 4.4])
+    b = 0.77
+    X = np.random.rand(1000, 4)
+    y = np.dot(X, W) + b
+    y = np.where(y>0.5, 0, 1)
+    return X, y
+
 def batcher(X_data, y_data, batch_size=-1, random_seed=None):
     if batch_size == -1:
         batch_size = n_samples
@@ -28,7 +36,7 @@ def batcher(X_data, y_data, batch_size=-1, random_seed=None):
 def logistic_regression_tf(X_train, y_train, X_test, y_test, n_epochs=100, batch_size=128, learning_rate=0.01):
     X_merged = np.r_[X_train, X_test]
     X_merged = StandardScaler().fit_transform(X_merged)      # 标准转化
-    X_merged = np.c_[np.ones((len(X_merged), 1)), X_merged]  # 增加一列1，用于学习bias数值
+    # X_merged = np.c_[np.ones((len(X_merged), 1)), X_merged]  # 增加一列1，用于学习bias数值
     X_train = X_merged[:len(X_train)]
     X_test = X_merged[len(X_train):]
     y_train = y_train.reshape(-1, 1)
@@ -36,17 +44,14 @@ def logistic_regression_tf(X_train, y_train, X_test, y_test, n_epochs=100, batch
 
     X = tf.placeholder(dtype=tf.float32, shape=(None, X_train.shape[1]), name='X')
     y = tf.placeholder(dtype=tf.float32, shape=(None, 1), name="y")
+    W = tf.Variable(tf.random_uniform([X_train.shape[1], 1], -1.0, 1.0), name='weights')
+    b = tf.Variable(0, dtype=tf.float32, name='bias')
     theta = tf.Variable(tf.random_uniform([X_train.shape[1], 1], -1.0, 1.0), name="theta")
     y_pred = tf.matmul(X, theta, name="predictions")
-    error = y_pred - y
-    mse = tf.reduce_mean(tf.square(error), name="mse")
+
     optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
     # optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate, momentum=0.9)
-
-    alpha = 0.003
-    loss = tf.add(mse, alpha*tf.nn.l2_loss(theta))
-    # loss = tf.add(mse, tf.contrib.layers.l1_regularizer(0.01)(theta))
-    # loss = mse
+    loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=y, logits=y_pred)
     training_op = optimizer.minimize(loss)
 
     init = tf.global_variables_initializer()

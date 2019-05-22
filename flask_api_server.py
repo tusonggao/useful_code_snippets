@@ -1,3 +1,5 @@
+# http://andrejusb.blogspot.com/2019/04/publishing-machine-learning-api-with.html
+# Publishing Machine Learning API with Python Flask
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 import pickle
@@ -26,7 +28,7 @@ def home():
 
 
 @app.route('/get_json/', methods=['GET'])
-def oop():
+def get_json():
     return jsonify({'tasks': tasks})
 
 
@@ -37,5 +39,26 @@ def add(num1, num2):
     return str(int(num1)+int(num2))
 
 
+@app.route('/sub/<num1>/<num2>', methods=['GET'])
+def sub(num1, num2):
+    d = {"num1": num1, "num2": num2}
+    print('in add, d is ', d)
+    return str(int(num1)-int(num2))
+
+
+@app.route('/multiply/<num1>/<num2>', methods=['GET'])
+def multiply(num1, num2):
+    d = {"num1": num1, "num2": num2}
+    print('in add, d is ', d)
+    return str(int(num1)*int(num2))
+
+@app.route('/divide/<num1>/<num2>', methods=['GET'])
+def divide(num1, num2):
+    d = {"num1": num1, "num2": num2}
+    print('in add, d is ', d)
+    return str(int(num1)/int(num2))
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
+

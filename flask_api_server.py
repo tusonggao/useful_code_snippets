@@ -1,7 +1,4 @@
-# http://andrejusb.blogspot.com/2019/04/publishing-machine-learning-api-with.html
-# Publishing Machine Learning API with Python Flask
 from flask import Flask, jsonify, request
-from flask_cors import CORS, cross_origin
 import pickle
 import pandas as pd
 
@@ -60,5 +57,7 @@ def divide(num1, num2):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True) # 这种方法可以支持对外访问
+    # app.run(host='127.0.0.1', port=8080, debug=True)  # 这种方法本机可以访问，但对外访问可能会有问题
+    # app.run(host='localhost', port=8080, debug=True)  # 这种方法本机可以访问，但对外访问可能会有问题
 

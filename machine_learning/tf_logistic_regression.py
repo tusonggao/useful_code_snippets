@@ -8,8 +8,10 @@ from sklearn.datasets import fetch_california_housing
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
+
 def sigmoid(z):
     return 1 / (1 + np.exp( - z))
+
 
 def create_mock_data():
     # np.random.seed(42)

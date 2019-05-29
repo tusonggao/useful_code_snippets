@@ -18,9 +18,9 @@ start_t = time.time()
 #
 #
 # headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-# c.request('GET', '/get_recentbuy_force', '{}', headers)  # 8940
+# # c.request('GET', '/get_recentbuy_force', '{}', headers)  # 8940
 # # c.request('GET', '/get_recommend/A9343E00-EDC9-40EA-91FA-D41BE979F970', '{}', headers)
-# # c.request('GET', '/get_recommend/88B88334-B470-4E7B-8BAD-F99FFFBEA284', '{}', headers) # for ceshi  88B88334-B470-4E7B-8BAD-F99FFFBEA284
+# c.request('GET', '/get_recommend/88B88334-B470-4E7B-8BAD-F99FFFBEA284', '{}', headers) # for ceshi  88B88334-B470-4E7B-8BAD-F99FFFBEA284
 # s = c.getresponse().read().strip()
 #
 # print('s is ', s)
@@ -32,11 +32,19 @@ start_t = time.time()
 
 # response = requests.get('http://users-cycles-recommend.dev.jianke.com/get_recentbuy_force')
 response = requests.get('https://fe-acgi.jianke.com/v2/products/475907?manual=true&net=WiFi&sid=35Fr5WIuCfin')
-print(response.status_code)  # 打印状态码
-print(response.url)          # 打印请求url
-print(response.headers)      # 打印头信息
-print(response.cookies)      # 打印cookie信息
-print(response.text)         # 以文本形式打印网页源码
+# print(response.status_code)  # 打印状态码
+# print(response.url)          # 打印请求url
+# print(response.headers)      # 打印头信息
+# print(response.cookies)      # 打印cookie信息
+# print(response.text)         # 以文本形式打印网页源码
 
-ddd = json.loads(s)
+ddd = json.loads(response.text)
+
+if 'success' in ddd and ddd['success']==False:
+    print('success is false')
+else:
+    print('ddd[data] is ', ddd['mainData'])
+
+
+
 

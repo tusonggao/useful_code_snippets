@@ -12,9 +12,9 @@ start_t = time.time()
 
 #------------------------------------------------------------------------------
 
-# c = http.client.HTTPConnection('172.21.57.127', 7777)   # 14041
-c = http.client.HTTPConnection('users-cycles-recommend.dev.jianke.com', 80)  # 14041
-# c = http.client.HTTPConnection('users-cycles-recommend.internal.jianke.com', 80)  # 14041
+c = http.client.HTTPConnection('172.21.57.127', 7777)   # 14041
+# c = http.client.HTTPConnection('users-cycles-recommend.dev.jianke.com', 80)  # 8641  8243
+c = http.client.HTTPConnection('users-cycles-recommend.internal.jianke.com', 80)  # 8641  8641
 
 start_t = time.time()
 
@@ -85,7 +85,7 @@ def split_all_text(response_text):
 def check_upload_successful(check_num=5):
     print('in check_upload_successful()')
     host_name = 'http://ai-service.idc.jianke.com/callcenter-reco'
-    buy_user_id_lst = ['FFFFD9FA-0420-454B-A877-36A7C6797213']
+    buy_user_id_lst = ['ED224973-E3F3-4B2F-9FEA-2CF65699F071']
 
     print('buy_user_id_lst is ', buy_user_id_lst)
 

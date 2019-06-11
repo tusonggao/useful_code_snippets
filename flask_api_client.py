@@ -12,9 +12,9 @@ start_t = time.time()
 
 #------------------------------------------------------------------------------
 
-c = http.client.HTTPConnection('172.21.57.127', 7777)   # 14041
-# c = http.client.HTTPConnection('users-cycles-recommend.dev.jianke.com', 80)  # 8641  8243
-c = http.client.HTTPConnection('users-cycles-recommend.internal.jianke.com', 80)  # 8641  8641
+# c = http.client.HTTPConnection('172.21.57.127', 7777)   # 14041
+c = http.client.HTTPConnection('users-cycles-recommend.dev.jianke.com', 80)  # 8641  8243  8138
+# c = http.client.HTTPConnection('users-cycles-recommend.internal.jianke.com', 80)  # 8641 8138
 
 start_t = time.time()
 
@@ -26,9 +26,9 @@ s = c.getresponse().read().strip()
 print('request cost time: ', time.time()-start_t)
 
 print('s is ', s)
-ddd = json.loads(s)
+# ddd = json.loads(s)
 
-print('ddd is ', len(ddd))
+# print('ddd is ', len(ddd))
 
 #------------------------------------------------------------------------------
 
@@ -111,7 +111,7 @@ def check_upload_successful(check_num=5):
     print('get all cost time', end_t - start_t)
 
 
-check_upload_successful()
+# check_upload_successful()
 
 
 

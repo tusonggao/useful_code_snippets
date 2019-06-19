@@ -12,9 +12,12 @@ start_t = time.time()
 
 #------------------------------------------------------------------------------
 
-# c = http.client.HTTPConnection('172.21.57.127', 7777)   # 14041
-c = http.client.HTTPConnection('users-cycles-recommend.dev.jianke.com', 80)  # 8641  8243  8138
-# c = http.client.HTTPConnection('users-cycles-recommend.internal.jianke.com', 80)  # 8641 8138
+
+# c = http.client.HTTPConnection('172.21.57.127', 7777)  #
+# c = http.client.HTTPConnection('127.0.0.1', 5000)  # 7766
+# c = http.client.HTTPConnection('users-cycles-recommend.dev.jianke.com', 80)  # 7766  8823
+c = http.client.HTTPConnection('users-cycles-recommend.internal.jianke.com', 80)  #7766  7766
+
 
 start_t = time.time()
 
@@ -26,9 +29,9 @@ s = c.getresponse().read().strip()
 print('request cost time: ', time.time()-start_t)
 
 print('s is ', s)
-# ddd = json.loads(s)
+ddd = json.loads(s)
 
-# print('ddd is ', len(ddd))
+print('ddd is ', len(ddd))
 
 #------------------------------------------------------------------------------
 
@@ -85,7 +88,7 @@ def split_all_text(response_text):
 def check_upload_successful(check_num=5):
     print('in check_upload_successful()')
     host_name = 'http://ai-service.idc.jianke.com/callcenter-reco'
-    buy_user_id_lst = ['ED224973-E3F3-4B2F-9FEA-2CF65699F071']
+    buy_user_id_lst = ['D908B16B-9020-446A-AFC1-12AD87E905A4']
 
     print('buy_user_id_lst is ', buy_user_id_lst)
 
@@ -111,7 +114,7 @@ def check_upload_successful(check_num=5):
     print('get all cost time', end_t - start_t)
 
 
-# check_upload_successful()
+check_upload_successful()
 
 
 

@@ -1,5 +1,9 @@
 import pika
-  
+
+
+# credentials = pika.PlainCredentials('guest', 'guest')
+# connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', 5672, '/', credentials))
+
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
   

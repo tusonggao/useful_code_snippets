@@ -7,7 +7,6 @@ import datetime
 # credentials = pika.PlainCredentials('admin', 'jianke@mall123')
 # connection = pika.BlockingConnection(pika.ConnectionParameters('172.25.10.43', 5672, '/essearch', credentials))
 
-
 credentials = pika.PlainCredentials('tsg', 'tsg2019')
 connection = pika.BlockingConnection(pika.ConnectionParameters('154.92.19.167', 5672, '/', credentials))
 

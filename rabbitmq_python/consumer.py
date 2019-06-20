@@ -1,38 +1,24 @@
 import pika
 import datetime
 
+credentials = pika.PlainCredentials('tsg', 'tsg2019')
+connection = pika.BlockingConnection(pika.ConnectionParameters('154.92.19.167', 5672, '/', credentials))
 
-# credentials = pika.PlainCredentials('tsg', 'tsg2019')
-# connection = pika.BlockingConnection(pika.ConnectionParameters('154.92.19.167', 5672, '/', credentials))
-
-credentials = pika.PlainCredentials('admin', 'jianke@mall123')
-connection = pika.BlockingConnection(pika.ConnectionParameters('172.25.10.43', 5672, '/essearch', credentials))
-
+# credentials = pika.PlainCredentials('admin', 'jianke@mall123')
+# connection = pika.BlockingConnection(pika.ConnectionParameters('172.25.10.43', 5672, '/essearch', credentials))
 
 channel = connection.channel()
   
-# channel.queue_declare(queue='hello', durable=True)
-
-channel.exchange_declare(exchange='logs', exchange_type='fanout')
-
-result = channel.queue_declare(queue='', exclusive=True)
-queue_name = result.method.queue
-print('this queue_name is ', queue_name)
-
-channel.queue_bind(exchange='logs', queue=queue_name)
+channel.queue_declare(queue='hello', durable=True)
 
 
 def callback(ch, method, properties, body):
     now_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S %f')
     print(" [x] Received {}, received time: {}".format(body, now_str))
   
-# channel.basic_consume('hello', callback)
-
-channel.basic_consume(queue=queue_name,
+channel.basic_consume(queue='hello',
                       auto_ack=True,
                       on_message_callback=callback)
 
-# , consumer_tag='hello-consumer'
-  
 print(' [*] Waiting for messages. To exit press CTRL+C')
 channel.start_consuming()

@@ -3,10 +3,10 @@
 # http://blog.luisrei.com/articles/flaskrest.html
 
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 import pickle
 import pandas as pd
-
+import json
 
 app = Flask(__name__)
 

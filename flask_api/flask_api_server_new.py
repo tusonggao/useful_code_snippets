@@ -2,7 +2,6 @@
 # https://www.jianshu.com/p/f3624eebff80
 # http://blog.luisrei.com/articles/flaskrest.html
 
-
 from flask import Flask, jsonify, request, Response
 import pickle
 import pandas as pd
@@ -24,6 +23,30 @@ tasks = [
         'done': False
     }
 ]
+
+@app.errorhandler(404)
+def not_found(error=None):
+    message = {
+            'status': 404,
+            'message': 'Not Found: ' + request.url,
+    }
+    resp = jsonify(message)
+    resp.status_code = 404
+
+    return resp
+
+@app.route('/')
+def api_root():
+    return 'Welcome'
+
+@app.route('/articles')
+def api_articles():
+    return 'List of ' + url_for('api_articles')
+
+@app.route('/articles/<articleid>')
+def api_article(articleid):
+    return 'You are reading ' + articleid
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -90,6 +113,7 @@ def api_message():
         return "415 Unsupported Media Type ;)"
 
 
+
 @app.route('/hello', methods = ['GET'])
 def api_hello():
     data = {
@@ -100,6 +124,21 @@ def api_hello():
     resp = Response(js, status=200, mimetype='application/json')
     resp.headers['Link'] = 'http://tusonggao.com'
     return resp
+
+
+@app.route('/test_args')
+def api_test_args():
+    if 'name' in request.args:
+        name = request.args['name']
+    else:
+        name = 'Andy'
+
+    if 'age' in request.args:
+        age = request.args['age']
+    else:
+        age = 20
+
+    return 'Hello {}, you are {} years old!'.format(name, age)
 
 
 if __name__ == '__main__':

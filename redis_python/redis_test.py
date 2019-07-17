@@ -25,3 +25,6 @@ val = conn.get('nametsg')
 redis_cost_time = time.time()-start_t
 
 print ('val is ', val, 'cost time: ', redis_cost_time)   #获取
+
+if val is None:
+    print('val is None')

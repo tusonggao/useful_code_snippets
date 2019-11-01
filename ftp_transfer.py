@@ -35,6 +35,7 @@ def ftp_upload():
     bufsize = 1024  # 设置缓冲器大小
     fp = open(file_local, 'rb')
     f.storbinary('STOR ' + file_remote, fp, bufsize)
+    #f.storbinary('STOR temp/' + file_remote, fp, bufsize)  #上传到temp目录下
     fp.close()
 
 print('starting...')

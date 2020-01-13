@@ -1,3 +1,5 @@
+import os
+import sys
 import time
 import requests
 import json
@@ -35,7 +37,7 @@ from collections import Counter
 # host_name = 'http://detail-page-old-online-recommend.dev.jianke.com'
 # host_name = 'http://detail-page-old-online-recommend.internal.jianke.com'
 # host_name = 'http://abtest-service.tst.jianke.com'
-host_name = 'http://abtest-service.internal.jianke.com'
+# host_name = 'http://abtest-service.internal.jianke.com'
 
 params = {
           # 'product_code': 551997,  # {"outcome":["11807","208850","182769","769392","551409"],"algorithm":"NEW_ITEM_BASED"}
@@ -85,6 +87,7 @@ params = {
 # params = {'product_code': '286002',
 #           'user_id': '0011tttyy88oo99333'}  # item-based
 
+
 start_t = time.time()
 
 # headers = {
@@ -95,7 +98,7 @@ start_t = time.time()
 headers = {
     # 'X-JK-UDID': '3332255555444iii',   #
     # 'X-JK-UDID': '000001111112222223333333tttuui',   #
-    'X-JK-UDID': '000001111112222223333333tttuuz',   # new
+    # 'X-JK-UDID': '000001111112222223333333tttuuz',   # new
     # 'X-JK-UDID': '000001111112222223333333tttuuu',     # new
     # 'X-JK-UDID': '000001111112222223333333tttw',       # old {"outcome":["1925","11208","2060","54934","54905"],"algorithm":"NEW_ITEM_BASED"}
     # 'X-JK-UDID': '000001111112222223333333ttte',       #  new {"outcome":["3394","28","222","357","1990"],"algorithm":"OLD_ON_LINE"}
@@ -103,7 +106,7 @@ headers = {
     # 'X-JK-UDID': '000001111112222223333333ttthhh',     # new
     # 'X-JK-UDID': '2642F990-CA9D-4227-89D3-09927DD3F207', # new
     # 'X-JK-UDID': '000001111112222223333333ttthh11',    # new
-    # 'X-JK-UDID': '000001111112222223333333ttthhh222',    # new
+    'X-JK-UDID': '000001111112222223333333ttthhh222',    # new
 }
 
 
@@ -114,18 +117,18 @@ headers = {
 #   ]
 # }
 
-# response = requests.get(host_name + '/itemBasedRecommend', params=params)
+response = requests.get(host_name + '/itemBasedRecommend', params=params)
 # response = requests.get(host_name + '/emptyRecommend', params=params)
 # response = requests.get(host_name + '/get_running_info', params=params)
 # last_read_data_datetime: 2019-08-22 19:04:40 len of item_based_recommend_outcome: 16251
 # response = requests.get(host_name + '/oldOnlineRecommend', params=params)
-response = requests.get(host_name + '/item/recommend', headers=headers, params=params)
+# response = requests.get(host_name + '/item/recommend', headers=headers, params=params)
 
 print(response.text)
 print('time cost: ', time.time()-start_t)
 
 # algo_lst = []
-# for i in range(500):
+# for i in range(200):
 #     all_candidate_chs = string.digits + string.ascii_letters
 #     rand_udid = ''.join(list(np.random.choice(list(all_candidate_chs), 22)))
 #     headers = {'X-JK-UDID': rand_udid}
@@ -139,7 +142,7 @@ print('time cost: ', time.time()-start_t)
 #     # print('response is ', response)
 #     print('response[algorithm]', response['algorithm'])
 #     algo_lst.append(response['algorithm'])
-#     time.sleep(0.3)
+#     time.sleep(0.4)
 #
 # print('Counter of algo_lst is ', Counter(algo_lst))
 

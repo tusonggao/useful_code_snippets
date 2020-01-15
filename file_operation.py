@@ -1,6 +1,12 @@
 import os
 
 
+import os
+for dirname, _, filenames in os.walk('/kaggle/input/'):
+    for filename in filenames:
+        print(os.path.join(dirname, filename))
+
+
 def get_all_files(dir_name):   # 递归得到文件夹下的所有文件
     all_files_lst = []
     def get_all_files_worker(path):

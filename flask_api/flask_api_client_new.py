@@ -37,7 +37,7 @@ from collections import Counter
 # host_name = 'http://detail-page-old-online-recommend.dev.jianke.com'
 # host_name = 'http://detail-page-old-online-recommend.internal.jianke.com'
 # host_name = 'http://abtest-service.tst.jianke.com'
-# host_name = 'http://abtest-service.internal.jianke.com'
+host_name = 'http://abtest-service.internal.jianke.com'
 
 params = {
           # 'product_code': 551997,  # {"outcome":["11807","208850","182769","769392","551409"],"algorithm":"NEW_ITEM_BASED"}
@@ -117,34 +117,34 @@ headers = {
 #   ]
 # }
 
-response = requests.get(host_name + '/itemBasedRecommend', params=params)
+# response = requests.get(host_name + '/itemBasedRecommend', params=params)
 # response = requests.get(host_name + '/emptyRecommend', params=params)
 # response = requests.get(host_name + '/get_running_info', params=params)
 # last_read_data_datetime: 2019-08-22 19:04:40 len of item_based_recommend_outcome: 16251
 # response = requests.get(host_name + '/oldOnlineRecommend', params=params)
-# response = requests.get(host_name + '/item/recommend', headers=headers, params=params)
+response = requests.get(host_name + '/item/recommend', headers=headers, params=params)
 
 print(response.text)
 print('time cost: ', time.time()-start_t)
 
-# algo_lst = []
-# for i in range(200):
-#     all_candidate_chs = string.digits + string.ascii_letters
-#     rand_udid = ''.join(list(np.random.choice(list(all_candidate_chs), 22)))
-#     headers = {'X-JK-UDID': rand_udid}
-#     print('rand_udid is ', rand_udid)
-#
-#     start_t = time.time()
-#     response = requests.get(host_name + '/item/recommend', headers=headers, params=params)
-#     print('cost time: ', time.time()-start_t)
-#     print(response.text)
-#     response = json.loads(response.text)
-#     # print('response is ', response)
-#     print('response[algorithm]', response['algorithm'])
-#     algo_lst.append(response['algorithm'])
-#     time.sleep(0.4)
-#
-# print('Counter of algo_lst is ', Counter(algo_lst))
+algo_lst = []
+for i in range(200):
+    all_candidate_chs = string.digits + string.ascii_letters
+    rand_udid = ''.join(list(np.random.choice(list(all_candidate_chs), 22)))
+    headers = {'X-JK-UDID': rand_udid}
+    print('rand_udid is ', rand_udid)
+
+    start_t = time.time()
+    response = requests.get(host_name + '/item/recommend', headers=headers, params=params)
+    print('cost time: ', time.time()-start_t)
+    print(response.text)
+    response = json.loads(response.text)
+    # print('response is ', response)
+    print('response[algorithm]', response['algorithm'])
+    algo_lst.append(response['algorithm'])
+    time.sleep(0.4)
+
+print('Counter of algo_lst is ', Counter(algo_lst))
 
 # print(json.loads(response.text)[0]['7A009D92-CA59-4EEF-80F5-AE0BCA507E10'])
 

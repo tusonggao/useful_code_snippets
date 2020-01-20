@@ -1,6 +1,5 @@
 import os
 
-
 def get_all_files_dirs(root_dir_name):  # 得到文件夹下所有文件名路径和目录路径（会递归到子目录）
     filenames_lst, dirnames_lst = [], []
     for dirpath, dirnames, filenames in os.walk(root_dir_name):
@@ -25,6 +24,17 @@ def get_all_files(dir_name):   # 递归得到文件夹下的所有文件
     get_all_files_worker(dir_name)
     return all_files_lst
 
+
+##############################################################################
+
+import glob
+file_name_lst = glob.glob('./text_classification/**/*.py', recursive=False)  # 得到当前文件夹下的text_classification子文件夹中所有python源文件
+file_name_lst = glob.glob('./text_classification/*.py', recursive=True)   # 得到当前文件夹下的text_classification子文件夹中所有python源文件，会进一步查找子目录
+for file_name in glob.iglob('./text_classification/**/*.py', recursive=True):  # 通过迭代器遍历
+    print('file_name is ', file_name)
+
+
+##############################################################################
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # 得到当前文件的的父目录
 

@@ -128,23 +128,48 @@ print(response.text)
 print('time cost: ', time.time()-start_t)
 
 algo_lst = []
+total_cost_time = 0.0
 for i in range(200):
     all_candidate_chs = string.digits + string.ascii_letters
     rand_udid = ''.join(list(np.random.choice(list(all_candidate_chs), 22)))
     headers = {'X-JK-UDID': rand_udid}
-    print('rand_udid is ', rand_udid)
 
     start_t = time.time()
     response = requests.get(host_name + '/item/recommend', headers=headers, params=params)
-    print('cost time: ', time.time()-start_t)
-    print(response.text)
-    response = json.loads(response.text)
-    # print('response is ', response)
-    print('response[algorithm]', response['algorithm'])
-    algo_lst.append(response['algorithm'])
-    time.sleep(0.4)
+    total_cost_time += time.time() - start_t
 
-print('Counter of algo_lst is ', Counter(algo_lst))
+    response = json.loads(response.text)
+    # print('response[algorithm]', response['algorithm'])
+    algo_lst.append(response['algorithm'])
+    time.sleep(0.3)
+
+print('not using session, total cost time: ', total_cost_time)
+# print('Counter of algo_lst is ', Counter(algo_lst))
+
+########################################################################################
+
+print('using requests.Session')
+
+algo_lst = []
+total_cost_time = 0.0
+session = requests.Session()
+for i in range(200):
+    all_candidate_chs = string.digits + string.ascii_letters
+    rand_udid = ''.join(list(np.random.choice(list(all_candidate_chs), 22)))
+    headers = {'X-JK-UDID': rand_udid}
+
+    start_t = time.time()
+    response = session.get(host_name + '/item/recommend', headers=headers, params=params)
+    total_cost_time += time.time() - start_t
+
+    response = json.loads(response.text)
+    algo_lst.append(response['algorithm'])
+    time.sleep(0.3)
+
+print('using session, total cost time: ', total_cost_time)
+# print('Counter of algo_lst is ', Counter(algo_lst))
+
+########################################################################################
 
 # print(json.loads(response.text)[0]['7A009D92-CA59-4EEF-80F5-AE0BCA507E10'])
 
